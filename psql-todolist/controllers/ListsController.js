@@ -1,16 +1,14 @@
-import ListModel from '../models/ListModel.js'
-
-let List = new ListModel();
+import ListModel from '../models/ListsModel.js'
 
 class ListController {
     findAllLists() {
-        return List.findAllLists()
+        return ListModel.findAllLists()
     }
     createList(title) {
-        return List.createList(title);
+        return ListModel.createList(title);
     }
     removeListById(id) {
-        return List.removeListById(id);
+        return ListModel.removeListById(id);
     }
 }
 

@@ -1,9 +1,9 @@
-import TaskModel from '../model/TasksModel'
+import TaskModel from '../models/TasksModel.js'
 
 class TodoController {
 
-    getOpensTaskBylistId(listId, all) {
-        return TaskModel.getOpensTaskBylistId(listId, all);
+    getOpensTaskListId(listId, all) {
+        return TaskModel.getOpensTaskListId(listId, all);
     }
 
     getTasksForToday() {
@@ -14,8 +14,8 @@ class TodoController {
         return TaskModel.getCollectionOfTasksForToday();
     }
 
-    createTask(listId, title) {
-        return TaskModel.createTask(listId, title);
+    createTask(listId, body) {
+        return TaskModel.createTask(listId, body);
     }
 
     updateTaskById(listId, taskId, body) {
@@ -26,12 +26,8 @@ class TodoController {
         return TaskModel.rewriteTaskById(listId, taskId, body);
     }
 
-    getTasks(listId) {
-        return TaskModel.getTasks(listId);
-    }
-
     findTaskById(listId, taskId) {
-        return TaskModel.getTaskById(listId, taskId);
+        return TaskModel.findTaskById(listId, taskId);
     }
 
     deleteTaskById(listId, taskId) {
@@ -40,6 +36,10 @@ class TodoController {
 
     deleteAllTasks() {
         return TaskModel.deleteAllTasks()
+    }
+
+    getTasks(listId) {
+        return TaskModel.getTasks(listId);
     }
 }
 

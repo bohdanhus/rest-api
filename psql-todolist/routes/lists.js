@@ -1,5 +1,5 @@
 import express from 'express';
-import ListController from '../controllers/ListController.js';
+import ListController from '../controllers/ListsController.js';
 import tasks from './tasks.js';
 
 const router = express.Router()
@@ -7,7 +7,6 @@ const router = express.Router()
 router.get('/:listId?', (req, res) => {
     ListController.findAllLists()
         .then(data => {
-            if (data.severity === 'ERROR') res.status(404).json({error: 'Sorry, but lists was not found'})
             res.json(data)
         })
 });
@@ -15,7 +14,9 @@ router.get('/:listId?', (req, res) => {
 router.post('/:listId?', (req, res) => {
     ListController.createList(req.body.title)
         .then(data => {
-            if (data.severity === 'ERROR') res.status(404).json({error: 'Sorry, but something oops'})
+            data.err = undefined;
+            if (data.err === 'ERROR')
+                res.status(404).json({error: 'Not found'})
             res.json(data)
         })
 });
@@ -23,7 +24,8 @@ router.post('/:listId?', (req, res) => {
 router.delete('/:listId?', (req, res) => {
     ListController.removeListById(req.params.listId)
         .then(data => {
-            if (data.severity === 'ERROR') res.status(404).json({error: 'Sorry, but requested list was not found'})
+            if (data.err === 'ERROR')
+                res.status(404).json({error: 'Not found'})
             res.json(data)
         })
 });

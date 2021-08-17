@@ -6,7 +6,8 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     TasksController.getTasksForToday()
         .then(data => {
-            if (data.lenght === 0) {
+            console.log(data);
+            if (data.length === 0) {
                 res.json('There are no assignments for today')
             } else {
                 res.json(data);

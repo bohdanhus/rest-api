@@ -1,5 +1,5 @@
 import db from '../db.js';
-import {main} from '../model/EmployeesModel.js'
+import {main} from '../models/EmployeesModel.js'
 
 class EmployeesController {
     async getEmployees(req, res) {
@@ -10,5 +10,5 @@ class EmployeesController {
     }
 }
 
-export const employeeController = new EmployeesController();
+export default new EmployeesController();
 
