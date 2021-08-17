@@ -3,7 +3,7 @@ const {DataTypes} = pkg;
 
 import sequelize from "../db.js";
 
-const Todo = sequelize.define('todo', {   // define используем для определени
+const models = sequelize.define('todo', {   // define используем для определени
     id: {
         type: DataTypes.INTEGER,
         primaryKey:true,
@@ -23,28 +23,6 @@ const Todo = sequelize.define('todo', {   // define используем для 
     createdAt: false,
     updatedAt: false
 })
-const Lists = sequelize.define('lists', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey:true, autoIncrement:true,
-        allowNull: false},
-    title: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-},{
-    underscored: true,
-    tableName: 'lists',
-    createdAt: false,
-    updatedAt: false
-})
 
 
-Todo.belongsTo(Lists);
-Lists.hasMany(Todo);
-
-
-const models = {
-    Lists, Todo
-}
-export default models;
+export default models

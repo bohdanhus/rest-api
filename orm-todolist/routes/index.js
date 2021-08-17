@@ -4,7 +4,7 @@ const router = express.Router();
 
 import tasks from './task.js'
 
-router.use('/orm/lists', tasks);
+router.use('/tasks', tasks);
 
 
 export default router;

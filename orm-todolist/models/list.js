@@ -1,52 +1,3 @@
-const sequelize = require('./config');
-const Sequelize = require('sequelize');
-
-const lists = sequelize.define("lists", {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: false
-    },
-    name: {
-        type: Sequelize.TEXT,
-        allowNull: false
-    }
-});
-
-const tasks = sequelize.define("tasks", {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: false
-    },
-    name: {
-        type: Sequelize.TEXT,
-        allowNull: false
-    },
-    done: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
-    },
-    list_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
-    due_date: {
-        type: Sequelize.DATEONLY,
-        allowNull: false
-    }
-});
-
-// sequelize.sync().then(result => console.log(result))
-//     .catch(err => {
-//         console.log('err');
-//         console.log(err);
-//     });
-
-// lists.hasMany(tasks, { onDelete: "cascade" }); // ????
-tasks.hasOne(lists);
 
 class ListTodos {
 
@@ -82,7 +33,7 @@ class ListTodos {
         });
     }
 
-    addTask(listId, body) {
+    createTask(listId, body) {
         return tasks.create({
             name: body.name,
             list_id: +listId,
