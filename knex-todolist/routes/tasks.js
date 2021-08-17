@@ -3,62 +3,61 @@ import TaskController from '../controllers/TasksController.js'
 
 const router = express.Router({mergeParams: true});
 
-let length = data.rows.length;
 
 router.get('/', async (req, res) => {
-    TaskController.getOpensTaskBylistId(req.params.listId, req.query.all)
+    TaskController.getOpensTaskListId(req.params.listId, req.query.all)
         .then(data => {
-            if (length === 0) {
+            if (data.length === 0) {
                 res.status(404).json('404 - Not found');
             } else {
-                res.json(data.rows)
+                res.json(data)
             }
         })
 });
 router.get('/:taskId', async (req, res) => {
     TaskController.findTaskById(req.params.listId, req.params.taskId)
         .then(data => {
-            if (length === 0) {
+            if (data.length === 0) {
                 res.status(404).json('404 - Not found');
             } else {
-                res.json(data.rows[0])
+                res.json(data)
             }
         })
 });
 router.post('/', async (req, res) => {
-    TaskController.createTask(req.query.listId, req.body)
-        .then(data => res.json(data))
-        .catch(err => res.status(400))
+    TaskController.createTask(req.params.listId, req.body)
+        .then(data => res.json(data.rows[0]))
+        .catch(() => res.status(400))
 });
 router.patch('/:taskId', function (req, res) {
     TaskController.updateTaskById(req.params.listId, req.params.taskId, req.body)
         .then(data => {
-            if (length === 0) {
+            if (data.length === 0) {
                 res.status(404).json('404 - Not found');
             } else {
-                res.json(data.rows[0])
+                res.json(data)
             }
         })
 });
 router.put('/:taskId', async (req, res) => {
-    TaskController.rewriteTaskById(req.query.listId, req.body.id, req.body)
+    TaskController.rewriteTaskById(req.params.listId, req.params.id, req.body)
         .then(data => {
-            if (length === 0) {
-                res.status(404).json('404 - Not found');
+            if (data.length !== 0) {
+                res.json(data)
             } else {
-                res.json(data.rows[0])
+                res.status(404).json('404 - Not found');
             }
         })
 });
-router.delete('/:id', async (req, res) => {
-    TaskController.deleteTaskById(req.query.listId, req.body.id)
+router.delete('/:taskId', async (req, res) => {
+    TaskController.deleteTaskById(req.params.listId, req.params.taskId)
         .then(data => {
-        if (length === 0) {
-            res.status(404).json('404 - Not found');
-        } else {
-            res.json(data.rows[0])
-        }
-    })
+            if (data !== 0) {
+                res.status(202).json(data)
+            } else {
+                res.status(404).json('404 - Not found');
+            }
+        })
 });
 
 export default router;
